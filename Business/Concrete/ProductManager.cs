@@ -3,7 +3,8 @@ using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
-using Core.Business;
+using Business;
+using Core.Utilites.Business;
 using Core.Utilities.Results;
 using Core.Validation;
 using DataAccess.Abstract;
@@ -15,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Business.BusinessAspects.Autofac;
 
 namespace Business.Concrete
 {
@@ -29,8 +31,8 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        //22.15 DERSTEYİZ
-
+        //Claim: Bu kullanıcının product.add veya admin claimlerinden birine sahip olması gerekir. (İddia)
+        [SecuredOperation("product.add")]
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
